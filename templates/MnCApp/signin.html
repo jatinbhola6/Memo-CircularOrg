@@ -1,0 +1,28 @@
+<html>
+<head>
+<title>Sign In Form
+</title>
+</head>
+<body>
+<h3>Sign In</h3>
+<form action="#" method='POST'>
+{% csrf_token %}
+{% if form.non_field_errors %}
+    <ul>
+      {% for error in form.non_field_errors %}
+        <li><strong>{{ error }}</strong></li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+{% for field in form.visible_fields %}
+  <div id="{{ field.auto_id }}_container">
+    <div>
+      {{ field.label_tag }} {{ field }}
+    </div>
+  </div>
+  {% endfor %}
+<input type='submit' value='Sign In'>
+</form>
+<a href="{% url 'MnCapp:signup'%}"><button>New Employee?</button></a>
+</body>
+</html>

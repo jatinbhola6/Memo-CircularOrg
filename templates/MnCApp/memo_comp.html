@@ -1,0 +1,27 @@
+<html>
+<head>
+<title>Write your memo</title>
+</head>
+<body>
+<form action="#" method='post'>
+{%csrf_token%}
+ {% if form.non_field_errors %}
+    <ul>
+      {% for error in form.non_field_errors %}
+        <li>{{ error }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+  <table>
+  {% for field in form.visible_fields %}
+  <div><td>
+      {{ field.label_tag }}</td><td> {{ field }}
+    </div></td>
+    <td><div id="{{ field.auto_id }}_container"><tr>
+    {%if field.error %}<td>{{ field.help_text }}</td>{% endif %}
+    <div>
+  </div>
+  {% endfor %}<tr><td>
+  <input type="submit" value='Send Memo'></td></tr>
+  </table>
+</form></body></html>

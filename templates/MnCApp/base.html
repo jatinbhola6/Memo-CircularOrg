@@ -1,0 +1,70 @@
+{% load MnCapp_filter %}
+{% load static %}
+<html>
+	<head>
+		<title>Success Page</title>
+		<link rel='stylesheet' type='text/css' href="{% static 'MnCApp/succStyle.css'%}">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<script src="{% static 'MnCApp/javaS.js' %}"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	</head>	
+	<body>
+		<div id="banner">
+			<img src="{% static 'MnCApp/images/banner.png'%}"> 
+		</div>
+		<div id='user-info'>
+			<span id='welcomeText'>Welcome, {{emp.first_name}} {{emp.last_name}}</span>
+			<div class='dropdown'>
+				<div class='dropbtn' onclick='myFunc(this)'>
+					<div class='bar1'></div>
+					<div class='bar2'></div>
+					<div class='bar3'></div>
+				</div>			
+				<div class='dropdown-content' id='myDropdown' >
+					<a>Designation: {{ desigs|key:emp.designation }}</a>
+					<a>Department: {{ deptts|key:emp.department }}</a>
+					<a>Employee UID(use this to login): {{emp.emp_uid}}</a>
+					<a href="{%url 'MnCapp:logout' %}">Log Out</a>
+				</div>
+			</div>
+		</div>
+		<ul class="nav nav-tabs">
+  			<li class="active"><a data-toggle="tab" href="#memo">Memo</a></li>
+  			<li><a data-toggle="tab" href="#circular" >Circular</a></li>
+		</ul>	
+		<div class="tab-content">
+			<div id="memo" class="tab-pane fade in active">
+				<h3>Memos</h3>
+  				<ul>
+  					{% for memo in memo_list %}
+  						<li><a href="#" onclick="display('{{ memo.memo_id }}')" data-toggle="modal" data-target="#myMemo">{{ memo.subject }}</a></li>
+  					{% endfor %}
+  				</ul>
+  				<div class="modal fade" id="myMemo" role="dialog">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type=button class="close" data-dismiss="modal">&times;</button>
+								<div id="sub" class="modal-title"></div>
+							</div>
+							<div class="modal-body">
+								<div id="sender"></div>
+								
+								<div id="body"></div>
+							</div>
+							<div class="modal-footer">
+								<span id="time"></span>
+							</div>
+						</div>
+					</div>
+				</div>	
+			</div>
+			<div id="circular" class="tab-pane fade ">
+  				<h3>Circular</h3>
+				<p>List of circulars recieved</p>
+			</div>
+		</div>
+<!-- <a href="{% url 'MnCapp:write_memo' %}"><button>Compose Memo</button></a>  -->
+	</body>
+</html>

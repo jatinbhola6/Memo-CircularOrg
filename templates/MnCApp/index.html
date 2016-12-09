@@ -1,0 +1,49 @@
+{% load static %}
+<html>
+<head>
+<title>Memo and Circular Organizer</title>
+<link rel="stylesheet" href="{% static 'MnCApp/indStyle.css' %}" />
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<div class="logPanel" data-toggle="modal" data-target="#myModal">
+		<button class="logInButton btn-primary btn-lg" id="logIn">Log In</button>
+	</div>
+	<div id="myModal" class="modal fade" role="dialog">
+		<div class="modal-dialog">
+			<div class="moal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4><span class="glyphicon glyphicon-log-in"></span> Login</h4>
+				</div>
+				<div class="modal-body">
+					<form role="form" method="POST" action="#">
+						<div class="form-group">
+							{% csrf_token %}
+							{% for field in form.visible_fields %}
+								<span class="glyphicon {% cycle 'glyphicon-user' 'glyphicon-eye-open' %}"></span>
+								<b>
+									{{ field.label_tag }}
+								</b> 
+							{{ field }}
+							{% if field.error %}
+								<span class='error'>
+									{{ field.error }}
+								</span>
+							{% endif %}
+							{% endfor %}
+						</div>
+						<button type="submit" class="btn btn-default btn-success btn-block">Log In</button>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="submit" class="btn btn-default btn-danger pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
+          			<p>Not a member? <a href="{% url 'MnCApp:signup' %}">Sign Up</a></p>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

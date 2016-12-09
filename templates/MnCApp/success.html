@@ -1,0 +1,61 @@
+{% load MnCapp_filter %}
+{% load static %}
+<html>
+<head>
+<title>Success Page</title>
+<link rel='stylesheet' type='text/css' href="{% static 'MnCApp/succStyle.css'%}">
+<script src="{% static 'MnCApp/javaS.js' %}"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+</head>
+<body>
+<div id="banner">
+<img src="{% static 'MnCApp/images/banner.png'%}"> 
+</div>
+<div id='user-info'>
+<a id='welcomeText'>Welcome, {{emp.first_name}} {{emp.last_name}}</a>
+<div class='dropdown'>
+<div class='dropbtn' onclick='myFunc(this)'>
+<div class='bar1'></div>
+<div class='bar2'></div>
+<div class='bar3'></div>
+</div>
+<div class='dropdown-content' id='myDropdown' >
+<a>Designation: {{ desigs|key:emp.designation }}</a>
+<a>Department: {{ deptts|key:emp.department }}</a>
+<a>Employee UID(use this to login): {{emp.emp_uid}}</a>
+<a href="{%url 'MnCapp:logout' %}">Log Out</a>
+</div>
+</div>
+</div>
+<ul class="tab">
+  <li><a href="#" class="tablinks" onclick="openCity(event, 'Memo')">Memo</a></li>
+  <li><a href="#" class="tablinks" onclick="openCity(event, 'Circular')">Circular</a></li>
+ </ul>
+ <div id="Memo" class="tabcontent">
+  <h3>Memos</h3>
+  <p>Memo is the capital city of England.</p>
+  <ul>
+  {% for memo in memo_list %}
+  	<li><a href="#" onclick="display('{{ memo.memo_id }}')">{{ memo.subject }}</a></li>
+  {% endfor %}
+  </ul>
+</div>
+
+<div id="Circular" class="tabcontent">
+  <h3>Circular</h3>
+  <p>Circular is the capital of France.</p>
+</div>
+<!-- <a href="{% url 'MnCapp:write_memo' %}"><button>Compose Memo</button></a>  -->
+<div class="modal" id="myModal">
+<div class="modal-content">
+<span class="close" title="Close" onclick="document.getElementById('myModal').style.display='none'">&times;</span>
+<div id="sub"> Subject:</div>
+<div id="sender">From: </div>
+<div id="body">
+<span id="time"></span>
+<p id="body"></p>
+</div>
+</div>
+</div>
+</body>
+</html>
